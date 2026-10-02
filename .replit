@@ -3,8 +3,35 @@ run = "node index.js"
 
 [deployment]
 run = ["node", "index.js"]
-deploymentTarget = "cloudrun"
+deploymentTarget = "vm"
 
 [[ports]]
 localPort = 8080
 externalPort = 80
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "BK_DATA_DIR=/tmp/blue-knight-preview-data PORT=5000 npm start"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
