@@ -3,7 +3,7 @@ run = "node index.js"
 
 [deployment]
 run = ["node", "index.js"]
-deploymentTarget = "vm"
+deploymentTarget = "cloudrun"
 
 [[ports]]
 localPort = 8080
